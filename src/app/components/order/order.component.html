@@ -8,24 +8,44 @@
     </fa-icon>
   </h3>
   <div>
-    <label>Order Id:</label>
-    <span>{{pOrder.id}}</span><br />
-    <label>Client Name:</label>
-    <span>{{pOrder.clientName}}</span><br />
-    <label>Client Email:</label>
-    <span>{{pOrder.clientEmail}}</span><br />
-    <label>Total Price:</label>
-    <span>{{pOrder.totalPrice}}</span><br />
-    <label>Payment Status:</label>
-    <span>{{pOrder.paymentStatus}}</span><br />
-    <label>Order Items:</label>
-    <div *ngFor="let orderItem of pOrder.orderItems">
-      <label>Product Name:</label>
-      <span>{{orderItem.productName}}</span><br />
-      <label>Product Price:</label>
-      <label>{{orderItem.productPrice}}</label><br />
-      <label>Quantity:</label>
-      <label>{{orderItem.quantity}}</label><br />
+    <div class="mb-3">
+      <label for="orderIdInput" class="form-label">Order Id:</label>
+      <input disabled type="text" class="form-control" id="orderIdInput" value="{{pOrder.id}}">
+    </div>
+    <div class="mb-3">
+      <label for="orderClientNameInput" class="form-label">Client Name:</label>
+      <input disabled type="text" class="form-control" id="orderClientNameInput" value="{{pOrder.clientName}}">
+    </div>
+    <div class="mb-3">
+      <label for="orderClientEmailInput" class="form-label">Client Email:</label>
+      <input disabled type="email" class="form-control" id="orderClientEmailInput" value="{{pOrder.clientEmail}}">
+    </div>
+    <div class="mb-3">
+      <label for="orderTotalPriceInput" class="form-label">Total Price:</label>
+      <input disabled type="number" class="form-control" id="orderTotalPriceInput" value="{{pOrder.totalPrice}}">
+    </div>
+    <div class="mb-3">
+      <label for="orderTotalPriceInput" class="form-label">Payment Status:</label>
+      <input disabled type="text" class="form-control" id="orderTotalPriceInput" value="{{pOrder.paymentStatus}}">
+    </div>
+    <div class="mb-3">
+      <label disabled for="orderItemInput" class="form-label">Order Items:</label>
+      <hr />
+      <div class="mb-3 row" *ngFor="let orderItem of pOrder.orderItems">
+        <label for="productNameInput" class="col-sm-2 col-form-label">Product Name:</label>
+        <div class="col-sm-10">
+          <input disabled type="text" readonly class="form-control-plaintext" id="productNameInput" value="{{orderItem.productName}}">
+        </div>
+        <label for="priceInput" class="col-sm-2 col-form-label">Price:</label>
+        <div class="col-sm-10">
+          <input disabled type="text" readonly class="form-control-plaintext" id="priceInput" value="{{orderItem.productPrice}}">
+        </div>
+        <label for="quantityInput" class="col-sm-2 col-form-label">Quantity:</label>
+        <div class="col-sm-10">
+          <input disabled type="text" readonly class="form-control-plaintext" id="quantityInput" value="{{orderItem.quantity}}">
+        </div>
+        <hr />
+      </div>
     </div>
     <button class="btn btn-primary" (click)="onPayClick(pOrder)">Pay/UnPay</button>
   </div>

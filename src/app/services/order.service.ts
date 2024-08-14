@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { OrderOutput } from '../models/order-output';
 import { Observable } from 'rxjs';
 import { OrderInput } from '../models/order-input';
+import { OrderOutputMap } from '../models/order-output-map';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,10 @@ export class OrderService {
 
   listAllOrders() : Observable<OrderOutput[]> {
     return this.httpClient.get<OrderOutput[]>(this.orderManagementApiUrl);
+  }
+
+  listAllOrdersMapped(): Observable<OrderOutputMap[]> {
+    return this.httpClient.get<OrderOutputMap[]>(this.orderManagementApiUrl);
   }
 
   deleteOrder(orderId: number): Observable<number> {

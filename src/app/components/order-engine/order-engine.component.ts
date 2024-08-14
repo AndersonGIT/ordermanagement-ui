@@ -5,6 +5,7 @@ import { OrderOutput } from '../../models/order-output';
 import { OrderInput } from '../../models/order-input';
 import { CommonModule } from '@angular/common';
 import { OrderFormComponent } from '../order-form/order-form.component';
+import { OrderItemOutput } from '../../models/order-item-output';
 
 @Component({
   selector: 'app-order-engine',
@@ -19,13 +20,52 @@ export class OrderEngineComponent implements OnInit {
   constructor(private orderService: OrderService) { }
 
   ngOnInit(): void {
-    this.listAllOrdersCallBack();
+    this.listAllOrdersMappedCallBack();
   }
 
   listAllOrdersCallBack() {
     console.log('Starting To Call API');
     this.orderService.listAllOrders().subscribe((ordersResult) => {
       this.ordersOutput = ordersResult;
+      console.log("Orders Ouput List");
+      console.log(this.ordersOutput);
+    });
+    console.log('After Server Call');
+  }
+
+  listAllOrdersMappedCallBack() {
+    console.log('Starting To Call API');
+    this.ordersOutput = [];
+    this.orderService.listAllOrdersMapped().subscribe((ordersResult) => {
+
+      if (ordersResult) {
+        debugger;
+        ordersResult.forEach((orderMapped) => {
+          let orderItemsOutputAux: OrderItemOutput[] = [];
+          orderMapped.itensPedido.forEach((orderItem) => {
+            let orderItemOutputAux: OrderItemOutput = {
+              id: orderItem.id ?? 0,
+              productId: orderItem.idProduto,
+              productName: orderItem.nomeProduto,
+              productPrice: orderItem.valorUnitario,
+              quantity: orderItem.quantidade
+            }
+            orderItemsOutputAux.push(orderItemOutputAux);
+          })
+
+          const ordersOutputAux: OrderOutput = {
+            id: orderMapped.id ?? 0,
+            clientName: orderMapped.nomeCliente,
+            clientEmail: orderMapped.emailCliente,
+            totalPrice: orderMapped.valorTotal,
+            paymentStatus: orderMapped.pago,
+            orderItems: orderItemsOutputAux
+          }
+          debugger;
+          this.ordersOutput.push(ordersOutputAux);
+        })
+      }
+
       console.log("Orders Ouput List");
       console.log(this.ordersOutput);
     });
@@ -60,13 +100,13 @@ export class OrderEngineComponent implements OnInit {
     };
 
     this.orderService.updateOrder(orderPayload).subscribe(() => {
-      this.listAllOrdersCallBack();
+      this.listAllOrdersMappedCallBack();
     });
   }
 
   submitOrderCallBack(orderPayload: OrderInput) {
     this.orderService.insertOrder(orderPayload).subscribe(() => {
-      this.listAllOrdersCallBack();
-    });    
+      this.listAllOrdersMappedCallBack();
+    });
   }
 }

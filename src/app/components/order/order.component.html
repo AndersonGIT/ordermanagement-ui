@@ -1,0 +1,32 @@
+<div class="order"
+     (dblclick)="onPayClick(pOrder)"
+     [ngClass]="{paid: pOrder.paymentStatus}"
+     >  
+  <h3>
+    <fa-icon [icon]="faTimes" [ngStyle]="{'color': 'red'}"
+             (click)="onOrderDelete(pOrder)">
+    </fa-icon>
+  </h3>
+  <div>
+    <label>Order Id:</label>
+    <span>{{pOrder.id}}</span><br />
+    <label>Client Name:</label>
+    <span>{{pOrder.clientName}}</span><br />
+    <label>Client Email:</label>
+    <span>{{pOrder.clientEmail}}</span><br />
+    <label>Total Price:</label>
+    <span>{{pOrder.totalPrice}}</span><br />
+    <label>Payment Status:</label>
+    <span>{{pOrder.paymentStatus}}</span><br />
+    <label>Order Items:</label>
+    <div *ngFor="let orderItem of pOrder.orderItems">
+      <label>Product Name:</label>
+      <span>{{orderItem.productName}}</span><br />
+      <label>Product Price:</label>
+      <label>{{orderItem.productPrice}}</label><br />
+      <label>Quantity:</label>
+      <label>{{orderItem.quantity}}</label><br />
+    </div>
+    <button class="btn btn-primary" (click)="onPayClick(pOrder)">Pay/UnPay</button>
+  </div>
+</div>

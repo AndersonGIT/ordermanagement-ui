@@ -1,0 +1,8 @@
+<app-order-form (onSubmitOrderCallBack)="submitOrderCallBack($event)"></app-order-form>
+<b>Orders</b>
+<ul>
+  <app-order *ngFor="let order of ordersOutput" [pOrder]="order"
+             (onOrderDeleteCallBack)="orderDeleteCallBack($event)"
+             (onPayClickCallBack)="payClickCallBack($event)">
+  </app-order>
+</ul>
